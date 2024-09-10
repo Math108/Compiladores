@@ -46,7 +46,7 @@ public class WhileCommand extends Command {
 
     @Override
     public String generateTargetPython(int n) {
-        System.out.println("n no While: " + n);
+        //System.out.println("n no While: " + n);
         StringBuilder str = new StringBuilder();
         for(int i = 0; i < n; i++) {
             str.append("    ");

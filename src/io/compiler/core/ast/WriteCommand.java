@@ -10,7 +10,7 @@ public class WriteCommand extends Command {
 
 	@Override
 	public String generateTargetPython(int n) {
-		System.out.println("n no Write: " + n);
+		//System.out.println("n no Write: " + n);
 		StringBuilder str = new StringBuilder();
 		for(int i = 0; i < n; i++) {
             str.append("    ");

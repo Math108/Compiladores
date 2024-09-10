@@ -64,7 +64,7 @@ public class IfCommand extends Command {
 
 	@Override
 	public String generateTargetPython(int n) {
-		System.out.println("n no If: " + n);
+		//System.out.println("n no If: " + n);
 		StringBuilder str = new StringBuilder();
 		for(int i = 0; i < n; i++) {
             str.append("    ");

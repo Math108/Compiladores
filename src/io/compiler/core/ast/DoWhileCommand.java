@@ -47,6 +47,7 @@ public class DoWhileCommand extends Command {
 
     @Override
     public String generateTargetPython(int n) {
+        //System.out.println("n no doWhile: " + n);
         StringBuilder str = new StringBuilder();
         for(int i = 0; i < n; i++) {
             str.append("    ");

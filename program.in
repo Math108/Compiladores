@@ -5,9 +5,10 @@ programa meuPrograma
 	inicio
 		escreva("Hello World");
 		escreva("Fim do programa");
-		c := 1.1;
+		c := -1.1;
 		leia(a);
 		leia(b);
+		leia(c);
 		escreva(a);
 		i := 0;
 		j := 0;

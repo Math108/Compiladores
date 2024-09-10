@@ -8,9 +8,10 @@ def main():
     j = 0
     print("Hello World")
     print("Fim do programa")
-    c = 1.1
+    c = -1.1
     a = int(input())
     b = int(input())
+    c = float(input())
     print(a)
     i = 0
     j = 0

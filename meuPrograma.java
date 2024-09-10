@@ -11,9 +11,10 @@ public class meuPrograma{
     int j;
 System.out.println("Hello World");
 System.out.println("Fim do programa");
-c = 1.1;
+c = -1.1;
 a = _scTrx.nextInt();
 b = _scTrx.nextInt();
+c = _scTrx.nextDouble();
 System.out.println(a);
 i = 0;
 j = 0;

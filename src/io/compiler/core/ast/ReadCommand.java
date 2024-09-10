@@ -26,13 +26,21 @@ public class ReadCommand extends Command {
 
 	@Override
 	public String generateTarget() {
-		return var.getId() + " = " + ((var.getType() == Types.NUMBER) ? "_scTrx.nextInt();" : "_scTrx.nextLine();")
-				+ "\n";
+		String readMethod;
+		if(var.getType() == Types.NUMBER) {
+			readMethod = "_scTrx.nextInt();";
+		} else if (var.getType() == Types.REALNUMBER) {
+			readMethod = "_scTrx.nextDouble();";
+		} else {
+			readMethod = "_scTrx.nextLine();";
+		}
+
+		return var.getId() + " = " + readMethod + "\n";
 	}
 
 	@Override
 	public String generateTargetPython(int n) {
-		System.out.println("n no Read: " + n);
+		//System.out.println("n no Read: " + n);
 		StringBuilder str = new StringBuilder();
 		for(int i = 0; i < n; i++) {
             str.append("    ");
@@ -40,6 +48,8 @@ public class ReadCommand extends Command {
 		String typeConversion = "";
 		if (var.getType() == Types.NUMBER) {
 			typeConversion = "int(input())";
+		} else if (var.getType() == Types.REALNUMBER){
+			typeConversion = "float(input())";
 		} else {
 			typeConversion = "input()";
 		}

@@ -35,7 +35,7 @@ public class AttribCommand extends Command {
     @Override
     public String generateTargetPython(int n) {
         // Gera o código de atribuição na linguagem Python
-        System.out.println("n no Attrib: " + n);
+        //System.out.println("n no Attrib: " + n);
         StringBuilder str = new StringBuilder();
         for(int i = 0; i < (n); i++) {
             str.append("    ");
