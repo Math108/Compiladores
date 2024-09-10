@@ -1,0 +1,42 @@
+programa meuPrograma
+	declare a,b,i,j: number;
+	declare c: real number;
+	declare x,y: text;
+	inicio
+		escreva("Hello World");
+		escreva("Fim do programa");
+		c := 1.1;
+		leia(a);
+		leia(b);
+		escreva(a);
+		i := 0;
+		j := 0;
+		enquanto(i < 9) 
+		faca 
+			i := i + 1;
+			escreva("estou no while");
+		fimWhile
+		se (a > 5) entao
+			escreva("maior que 5");
+		senao
+		    escreva("menor que 5");
+		fimse
+
+		faca
+			j := j + 1;
+			escreva("estou no doWhile");
+		enquanto(j < 9)
+		fimWhile
+		
+		escreva("oi agora vamos testar outro");
+		se (b >= 0) entao
+		   escreva("b positivo");
+		senao
+		   escreva("b negativo");
+		fimse
+		
+		
+	fim
+fimprog
+
+			
