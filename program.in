@@ -1,14 +1,18 @@
 programa meuPrograma
 	declare a,b,i,j: number;
-	declare c: real number;
-	declare x,y: text;
+	declare c,k,y,w: real number;
+	declare x: text;
 	inicio
 		escreva("Hello World");
 		escreva("Fim do programa");
 		c := -1.1;
+		c := 1 + 2;
+		k := c + 1.0 * 2;
+		w := (c + 1.0) * 2;
+		escreva(k);
+		escreva(w);
 		leia(a);
 		leia(b);
-		leia(c);
 		escreva(a);
 		i := 0;
 		j := 0;

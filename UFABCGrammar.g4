@@ -7,6 +7,7 @@ grammar UFABCGrammar;
 	import io.compiler.types.*;
 	import io.compiler.core.exceptions.*;
 	import io.compiler.core.ast.*;
+
 }
 
 @members {
@@ -21,7 +22,6 @@ grammar UFABCGrammar;
     private DoWhileCommand currentDoWhileCommand;
     
     private Stack<ArrayList<Command>> stack = new Stack<ArrayList<Command>>();
-    
     
     public void updateType(){
     	for(Var v: currentDecl){
@@ -74,8 +74,12 @@ declaravar	: 'declare' { currentDecl.clear(); }
                   currentDecl.add(new Var(_input.LT(-1).getText()));
                }
                ( VIRG ID                
-              		 { currentDecl.add(new Var(_input.LT(-1).getText()));}
-               )*	 
+              		 { String varId2 = _input.LT(-1).getText();
+                     if (isDeclared(varId2) || currentDecl.stream().anyMatch(v->v.getId().equals(varId2))) {
+                        throw new UFABCSemanticException("Variable already declared: " + varId2);
+                     }
+                     currentDecl.add(new Var(_input.LT(-1).getText()));}
+               )*
                DP 
                (
                'number' {currentType = Types.NUMBER;}
@@ -90,23 +94,23 @@ declaravar	: 'declare' { currentDecl.clear(); }
 			;
 			
 comando     :  cmdAttrib
-			|  cmdLeitura
-			|  cmdEscrita
-			|  cmdIF
-         |  cmdWhile
-         |  cmdDoWhile
+               |  cmdLeitura
+               |  cmdEscrita
+               |  cmdIF
+               |  cmdWhile
+               |  cmdDoWhile
 			;
 			
 cmdIF		: 'se'  { stack.push(new ArrayList<Command>());
                       strExpr = "";
                       currentIfCommand = new IfCommand();
                     } 
-               AP 
+               AP
                expr
                OPREL  { strExpr += _input.LT(-1).getText(); }
                expr 
                FP  { currentIfCommand.setExpression(strExpr); 
-                     strExpr = "";}
+                  strExpr = "";}
                'entao'  
                comando+                
                { 
@@ -134,7 +138,7 @@ cmdWhile    :  'enquanto' {   stack.push (new ArrayList<Command>());
                expr 
                OPREL {strExpr += _input.LT(-1).getText();}
                expr 
-               FP {currentWhileCommand.setExpression(strExpr);
+               FP { currentWhileCommand.setExpression(strExpr);
                   strExpr = "";}
                'faca'
                comando+ 
@@ -160,8 +164,7 @@ cmdDoWhile  :  'faca' { stack.push (new ArrayList<Command>());
                expr
                OPREL {strExpr += _input.LT(-1).getText();}
                expr
-               FP {
-                  currentDoWhileCommand.setExpression(strExpr);
+               FP { currentDoWhileCommand.setExpression(strExpr);
                   strExpr = "";
                }
                'fimWhile'
@@ -188,16 +191,18 @@ cmdAttrib   : ID {      strExpr = "";
               PV
               
               {
-                 System.out.println("Left  Side Expression Type = "+leftType);
-                 System.out.println("Right Side Expression Type = "+rightType);
+                 //System.out.println("Left  Side Expression Type = "+leftType);
+                 //System.out.println("Right Side Expression Type = "+rightType);
                  if (leftType.getValue() < rightType.getValue()){
-                    throw new UFABCSemanticException("Type Mismatchig on Assignment");
+                    throw new UFABCSemanticException("Type Mismatching on Assignment");
                  }
+
                  strExpr = "";
+
               }
 			;			
 			
-cmdLeitura  : 'leia' AP 
+cmdLeitura  : 'leia' AP
                ID { if (!isDeclared(_input.LT(-1).getText())) {
                        throw new UFABCSemanticException("Undeclared Variable: "+_input.LT(-1).getText());
                     }
@@ -205,20 +210,31 @@ cmdLeitura  : 'leia' AP
                     Command cmdRead = new ReadCommand(symbolTable.get(_input.LT(-1).getText()));
                     stack.peek().add(cmdRead);
                   } 
-               FP 
+               FP
                PV 
 			;
 			
-cmdEscrita  : 'escreva' AP 
+cmdEscrita  : 'escreva' AP
               ( termo  { Command cmdWrite = new WriteCommand(_input.LT(-1).getText());
                          stack.peek().add(cmdWrite);
                        } 
               ) 
-              FP PV { rightType = null;}
+              FP PV {rightType = null;}
 			;	
 			
-expr		:  termo  { strExpr += _input.LT(-1).getText(); } exprl 			
-			;
+expr        :  
+               exprA (OPREL { strExpr += _input.LT(-1).getText();} exprA)?
+            ;
+
+exprA       : exprM ( (OP_SUM | OP_SUB) { 
+                     strExpr += _input.LT(-1).getText();
+                     }  exprM)* 
+            ;
+
+exprM       : termo ( (OP_MUL | OP_DIV) { 
+                     strExpr += _input.LT(-1).getText();}
+                     termo)* 
+            ;
 			
 termo		: ID  {     
                      if (!isDeclared(_input.LT(-1).getText())) {
@@ -229,6 +245,7 @@ termo		: ID  {
                      if (!symbolTable.get(_input.LT(-1).getText()).isInitialized()){
                        throw new UFABCSemanticException("Variable "+_input.LT(-1).getText()+" has no value assigned");
                      }
+                     strExpr += var.getId();
                      if (rightType == null){
                        rightType = symbolTable.get(_input.LT(-1).getText()).getType();
                        //System.out.println("Encontrei pela 1a vez uma variavel = "+rightType);
@@ -241,7 +258,9 @@ termo		: ID  {
                        }
                      }
                   }   
-			| NUM    {  if (rightType == null) {
+			| NUM    {  
+                     strExpr += _input.LT(-1).getText();
+                     if (rightType == null) {
 			 				rightType = Types.NUMBER;
 			 				//System.out.println("Encontrei um numero pela 1a vez "+rightType);
 			            }
@@ -252,7 +271,9 @@ termo		: ID  {
 			                }
 			            }
 			         }
-			| TEXTO  {  if (rightType == null) {
+			| TEXTO  {  
+                     //strExpr += _input.LT(-1).getText();
+                     if (rightType == null) {
 			 				rightType = Types.TEXT;
 			 				//System.out.println("Encontrei pela 1a vez um texto ="+ rightType);
 			            }
@@ -264,15 +285,16 @@ termo		: ID  {
 			                }
 			            }
 			         }
+         | AP {strExpr += "(";} expr FP {strExpr += ")";}
 			;
 			
-exprl		: ( OP { strExpr += _input.LT(-1).getText(); } 
-                termo { strExpr += _input.LT(-1).getText(); } 
-              ) *
-			;	
-			
-OP			: '+' | '-' | '*' | '/'
-			;	
+OP_SUM		: '+' ;
+
+OP_SUB		: '-' ;
+
+OP_MUL		: '*' ;
+
+OP_DIV		: '/' ;
 			
 OP_AT	    : ':='
 		    ;

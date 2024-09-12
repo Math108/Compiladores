@@ -8,6 +8,7 @@ package io.compiler.core;
 	import io.compiler.core.exceptions.*;
 	import io.compiler.core.ast.*;
 
+
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -116,6 +117,26 @@ public interface UFABCGrammarListener extends ParseTreeListener {
 	 */
 	void exitExpr(UFABCGrammarParser.ExprContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link UFABCGrammarParser#exprA}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprA(UFABCGrammarParser.ExprAContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link UFABCGrammarParser#exprA}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprA(UFABCGrammarParser.ExprAContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link UFABCGrammarParser#exprM}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprM(UFABCGrammarParser.ExprMContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link UFABCGrammarParser#exprM}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprM(UFABCGrammarParser.ExprMContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link UFABCGrammarParser#termo}.
 	 * @param ctx the parse tree
 	 */
@@ -125,14 +146,4 @@ public interface UFABCGrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTermo(UFABCGrammarParser.TermoContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link UFABCGrammarParser#exprl}.
-	 * @param ctx the parse tree
-	 */
-	void enterExprl(UFABCGrammarParser.ExprlContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link UFABCGrammarParser#exprl}.
-	 * @param ctx the parse tree
-	 */
-	void exitExprl(UFABCGrammarParser.ExprlContext ctx);
 }

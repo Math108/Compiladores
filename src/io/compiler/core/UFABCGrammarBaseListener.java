@@ -9,6 +9,7 @@ package io.compiler.core;
 	import io.compiler.core.ast.*;
 
 
+
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -145,6 +146,30 @@ public class UFABCGrammarBaseListener implements UFABCGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterExprA(UFABCGrammarParser.ExprAContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprA(UFABCGrammarParser.ExprAContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprM(UFABCGrammarParser.ExprMContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprM(UFABCGrammarParser.ExprMContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterTermo(UFABCGrammarParser.TermoContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -152,18 +177,6 @@ public class UFABCGrammarBaseListener implements UFABCGrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTermo(UFABCGrammarParser.TermoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterExprl(UFABCGrammarParser.ExprlContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExprl(UFABCGrammarParser.ExprlContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

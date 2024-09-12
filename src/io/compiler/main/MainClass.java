@@ -31,7 +31,7 @@ public class MainClass {
 			// agora eu quero chamar do meu jeito
 			System.out.println("UFABC Compiler");
 			parser.programa();
-			System.out.println("Compilation Successfully - Good Job");
+			System.out.println("Compilation Successful - Good Job");
 
 
 			/* vou deixar aqui a geracao do codigo do programa*/

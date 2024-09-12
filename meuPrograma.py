@@ -2,16 +2,22 @@ def main():
     a = 0
     b = 0
     c = 0.0
+    w = 0.0
     x = ''
     i = 0
-    y = ''
+    y = 0.0
     j = 0
+    k = 0.0
     print("Hello World")
     print("Fim do programa")
     c = -1.1
+    c = 1+2
+    k = c+1.0*2
+    w = (c+1.0)*2
+    print(k)
+    print(w)
     a = int(input())
     b = int(input())
-    c = float(input())
     print(a)
     i = 0
     j = 0
