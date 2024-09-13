@@ -176,6 +176,7 @@ cmdDoWhile  :  'faca' { stack.push (new ArrayList<Command>());
                FP { currentDoWhileCommand.setExpression(strExpr);
                   strExpr = "";
                }
+               PV
                'fimWhile'
                {
                   stack.peek().add(currentDoWhileCommand);
@@ -206,8 +207,11 @@ cmdAttrib   : ID {      strExpr = "";
                     throw new UFABCSemanticException("Type Mismatching on Assignment");
                  }
 
-                 
-                 System.out.println("Log: Valor atribuido a variavel " + varId + ": " + generateValue()); // Adicionado para imprimir o valor
+                 Var var = symbolTable.get(varId);
+                 double varValue = generateValue();
+                 var.setVarValue(varValue);
+
+                 System.out.println("Log: Valor atribuido a variavel " + varId + ": " + varValue); // Adicionado para imprimir o valor
                  strExpr = "";
 
                  topo = null;
@@ -256,7 +260,6 @@ expr       : exprl ( (OP_SUM | OP_SUB) {
                         evalStack.push(root);
 
                         System.out.println("Log: Valor da expressao " + strExpr + ": " + generateValue()); // Adicionado para imprimir o valor
-
                      })* 
             ;
 
@@ -302,6 +305,8 @@ termo		: ID  {
                           
                        }
                      }
+                     UnaryExpression element = new UnaryExpression(symbolTable.get(_input.LT(-1).getText()).getVarValue());
+                     evalStack.push(element);
                   }   
 			| NUM    {  
                      strExpr += _input.LT(-1).getText();

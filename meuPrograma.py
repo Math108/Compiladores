@@ -13,6 +13,7 @@ def main():
     c = -1.1
     c = 1+2
     k = 200*2+120*3
+    w = c+k
     w = 200*3/2
     a = int(input())
     b = int(input())

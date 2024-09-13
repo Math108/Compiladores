@@ -5,11 +5,18 @@ public class Var {
 	private Types type;
 	private boolean initialized;
 	private boolean utilized;
+	private double varValue;
 	
 	public Var(String id, Types type) {
 		super();
 		this.id = id;
 		this.type = type;
+	}
+	public double getVarValue() {
+		return varValue;
+	}
+	public void setVarValue(double value) {
+		this.varValue = value;
 	}
 	public boolean isUtilized() {
 		return utilized;

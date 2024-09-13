@@ -16,6 +16,7 @@ System.out.println("Fim do programa");
 c = -1.1;
 c = 1+2;
 k = 200*2+120*3;
+w = c+k;
 w = 200*3/2;
 a = _scTrx.nextInt();
 b = _scTrx.nextInt();
