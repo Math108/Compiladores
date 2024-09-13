@@ -12,16 +12,14 @@ def main():
     print("Fim do programa")
     c = -1.1
     c = 1+2
-    k = c+1.0*2
-    w = (c+1.0)*2
-    print(k)
-    print(w)
+    k = 200*2+120*3
+    w = 200*3/2
     a = int(input())
     b = int(input())
     print(a)
     i = 0
     j = 0
-    while i<9:
+    while i<9 or j<9:
         i = i+1
         print("estou no while")
     if a>5:
@@ -31,8 +29,12 @@ def main():
     while True:
         j = j+1
         print("estou no doWhile")
-        if not (j<9):
+        if not ((not(j>=9))):
             break
+    while i<10 and j<10:
+        j = j+1
+        i = i+1
+        print("teste and")
     print("oi agora vamos testar outro")
     if b>=0:
         print("b positivo")

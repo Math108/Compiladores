@@ -7,6 +7,7 @@ package io.compiler.core;
 	import io.compiler.types.*;
 	import io.compiler.core.exceptions.*;
 	import io.compiler.core.ast.*;
+   import io.compiler.runtime.*;
 
 
 
@@ -134,6 +135,30 @@ public class UFABCGrammarBaseListener implements UFABCGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterExprLog(UFABCGrammarParser.ExprLogContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprLog(UFABCGrammarParser.ExprLogContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprRel(UFABCGrammarParser.ExprRelContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprRel(UFABCGrammarParser.ExprRelContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExpr(UFABCGrammarParser.ExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -146,25 +171,13 @@ public class UFABCGrammarBaseListener implements UFABCGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprA(UFABCGrammarParser.ExprAContext ctx) { }
+	@Override public void enterExprl(UFABCGrammarParser.ExprlContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprA(UFABCGrammarParser.ExprAContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterExprM(UFABCGrammarParser.ExprMContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExprM(UFABCGrammarParser.ExprMContext ctx) { }
+	@Override public void exitExprl(UFABCGrammarParser.ExprlContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

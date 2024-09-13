@@ -40,6 +40,6 @@ public class AttribCommand extends Command {
         for(int i = 0; i < (n); i++) {
             str.append("    ");
         }
-        return str.append(id + " = " + expression + "\n").toString();
+        return str.append(id + " = " + pythonify(expression) + "\n").toString();
     }
 }

@@ -61,7 +61,7 @@ public class DoWhileCommand extends Command {
         for(int i = 0; i < n + 1; i++) {
             str.append("    ");
         }
-        str.append("if not (").append(expression).append("):\n");
+        str.append("if not (").append(pythonify(pythonify(expression))).append("):\n");
 
         for(int i = 0; i < n + 2; i++) {
             str.append("    ");

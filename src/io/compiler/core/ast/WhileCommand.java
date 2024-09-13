@@ -51,7 +51,7 @@ public class WhileCommand extends Command {
         for(int i = 0; i < n; i++) {
             str.append("    ");
         }
-        str.append("while " + expression + ":\n");
+        str.append("while " + pythonify(expression) + ":\n");
         for (Command cmd : commandList) {
             str.append(cmd.generateTargetPython(n+1));
         }

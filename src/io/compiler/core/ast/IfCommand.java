@@ -69,7 +69,7 @@ public class IfCommand extends Command {
 		for(int i = 0; i < n; i++) {
             str.append("    ");
         }
-		str.append("if ").append(expression).append(":\n");
+		str.append("if ").append(pythonify(expression)).append(":\n");
 		for (Command cmd : trueList) {
 			str.append(cmd.generateTargetPython(n+1));
 		}

@@ -7,6 +7,7 @@ grammar UFABCGrammar;
 	import io.compiler.types.*;
 	import io.compiler.core.exceptions.*;
 	import io.compiler.core.ast.*;
+   import io.compiler.runtime.*;
 
 }
 
@@ -22,6 +23,18 @@ grammar UFABCGrammar;
     private DoWhileCommand currentDoWhileCommand;
     
     private Stack<ArrayList<Command>> stack = new Stack<ArrayList<Command>>();
+
+    private Stack<AbstractExpression> evalStack = new Stack<AbstractExpression>();
+	 private AbstractExpression topo = null;
+	
+    public double generateValue(){
+       if (topo == null){
+          if (!(evalStack.isEmpty())) {
+          topo = evalStack.pop();
+          }
+       }
+       return topo.evaluate();
+    }
     
     public void updateType(){
     	for(Var v: currentDecl){
@@ -107,7 +120,7 @@ cmdIF		: 'se'  { stack.push(new ArrayList<Command>());
                     } 
                AP
                expr
-               OPREL  { strExpr += _input.LT(-1).getText(); }
+               (OPREL | OPLOG) { strExpr += _input.LT(-1).getText(); }
                expr 
                FP  { currentIfCommand.setExpression(strExpr); 
                   strExpr = "";}
@@ -135,9 +148,7 @@ cmdWhile    :  'enquanto' {   stack.push (new ArrayList<Command>());
                               currentWhileCommand = new WhileCommand();
                               }
                AP
-               expr 
-               OPREL {strExpr += _input.LT(-1).getText();}
-               expr 
+               exprLog 
                FP { currentWhileCommand.setExpression(strExpr);
                   strExpr = "";}
                'faca'
@@ -161,9 +172,7 @@ cmdDoWhile  :  'faca' { stack.push (new ArrayList<Command>());
                }
                'enquanto'
                AP
-               expr
-               OPREL {strExpr += _input.LT(-1).getText();}
-               expr
+               exprLog
                FP { currentDoWhileCommand.setExpression(strExpr);
                   strExpr = "";
                }
@@ -197,8 +206,12 @@ cmdAttrib   : ID {      strExpr = "";
                     throw new UFABCSemanticException("Type Mismatching on Assignment");
                  }
 
+                 
+                 System.out.println("Log: Valor atribuido a variavel " + varId + ": " + generateValue()); // Adicionado para imprimir o valor
                  strExpr = "";
 
+                 topo = null;
+               
               }
 			;			
 			
@@ -220,20 +233,52 @@ cmdEscrita  : 'escreva' AP
                        } 
               ) 
               FP PV {rightType = null;}
-			;	
-			
-expr        :  
-               exprA (OPREL { strExpr += _input.LT(-1).getText();} exprA)?
+			;			
+
+exprLog     : exprRel (OPLOG {strExpr += _input.LT(-1).getText();} exprLog)?
+            | OPNOT {strExpr += _input.LT(-1).getText() + "(";} exprLog {strExpr += ")";}
+            | AP exprLog FP {strExpr = "(" + strExpr + ")";}
             ;
 
-exprA       : exprM ( (OP_SUM | OP_SUB) { 
+exprRel     : expr (OPREL { strExpr += _input.LT(-1).getText();} expr)?
+            ;            
+
+expr       : exprl ( (OP_SUM | OP_SUB) { 
+                     BinaryExpression bin = new BinaryExpression(_input.LT(-1).getText().charAt(0));
+                     bin.setLeft(evalStack.pop());
+                     evalStack.push(bin);
+
                      strExpr += _input.LT(-1).getText();
-                     }  exprM)* 
+                     }  exprl {
+                        AbstractExpression topo = evalStack.pop(); // desempilhei o termo
+                        BinaryExpression root = (BinaryExpression) evalStack.pop(); // preciso do componente binário
+                        root.setRight(topo);
+                        evalStack.push(root);
+
+                        System.out.println("Log: Valor da expressao " + strExpr + ": " + generateValue()); // Adicionado para imprimir o valor
+
+                     })* 
             ;
 
-exprM       : termo ( (OP_MUL | OP_DIV) { 
+exprl       : termo ( (OP_MUL | OP_DIV) { 
+                     BinaryExpression bin = new BinaryExpression(_input.LT(-1).getText().charAt(0));
+                     if (evalStack.peek() instanceof UnaryExpression) { // o que tem no topo é um operador "simples"
+                        bin.setLeft(evalStack.pop()); // desempilho já tornando ele filho da multiplicacao
+                     } else {
+                        BinaryExpression father = (BinaryExpression)evalStack.pop();
+                        if (father.getOperation() == '-' || father.getOperation() == '+'){
+                           bin.setLeft(father.getRight());
+                           father.setRight(bin);
+                        } else {
+                           bin.setLeft(father);
+			                  evalStack.push(bin);
+                        }
+                     }
                      strExpr += _input.LT(-1).getText();}
-                     termo)* 
+                     termo {
+                        bin.setRight(evalStack.pop());
+                        evalStack.push(bin);
+                     })* 
             ;
 			
 termo		: ID  {     
@@ -270,6 +315,9 @@ termo		: ID  {
 			                	//System.out.println("Mudei o tipo para Number = "+rightType);
 			                }
 			            }
+
+                     UnaryExpression element = new UnaryExpression(Double.parseDouble(_input.LT(-1).getText()));
+                     evalStack.push(element);
 			         }
 			| TEXTO  {  
                      //strExpr += _input.LT(-1).getText();
@@ -289,6 +337,10 @@ termo		: ID  {
 			;
 			
 OP_SUM		: '+' ;
+
+OPLOG       : '||' | '&&' ;
+
+OPNOT       : '!' ;
 
 OP_SUB		: '-' ;
 
