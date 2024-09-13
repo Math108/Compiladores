@@ -119,9 +119,7 @@ cmdIF		: 'se'  { stack.push(new ArrayList<Command>());
                       currentIfCommand = new IfCommand();
                     } 
                AP
-               expr
-               (OPREL | OPLOG) { strExpr += _input.LT(-1).getText(); }
-               expr 
+               exprLog
                FP  { currentIfCommand.setExpression(strExpr); 
                   strExpr = "";}
                'entao'  
@@ -169,6 +167,7 @@ cmdDoWhile  :  'faca' { stack.push (new ArrayList<Command>());
                         }
                comando+ {
                   currentDoWhileCommand.setCommandList(stack.pop());
+                  strExpr = "";
                }
                'enquanto'
                AP
@@ -208,14 +207,20 @@ cmdAttrib   : ID {      strExpr = "";
                  }
 
                  Var var = symbolTable.get(varId);
-                 double varValue = generateValue();
-                 var.setVarValue(varValue);
 
-                 System.out.println("Log: Valor atribuido a variavel " + varId + ": " + varValue); // Adicionado para imprimir o valor
+                 if (var.getType() != Types.TEXT) {
+                     double varValue = generateValue();
+                     var.setVarValue(varValue);
+
+                     System.out.println("Log: Valor atribuido a variavel " + varId + ": " + varValue); // Adicionado para imprimir o valor
+                     
+
+                     topo = null;
+                 } else {
+                     var.setVarStringValue(strExpr);
+                     System.out.println("Log: Valor atribuido a variavel " + varId + ": " + strExpr);
+                 }
                  strExpr = "";
-
-                 topo = null;
-               
               }
 			;			
 			
@@ -325,16 +330,13 @@ termo		: ID  {
                      evalStack.push(element);
 			         }
 			| TEXTO  {  
-                     //strExpr += _input.LT(-1).getText();
+                     strExpr += _input.LT(-1).getText();
                      if (rightType == null) {
-			 				rightType = Types.TEXT;
-			 				//System.out.println("Encontrei pela 1a vez um texto ="+ rightType);
+			 				   rightType = Types.TEXT;
 			            }
 			            else{
 			                if (rightType.getValue() < Types.TEXT.getValue()){			                    
 			                	rightType = Types.TEXT;
-			                	//System.out.println("Mudei o tipo para TEXT = "+rightType);
-			                	
 			                }
 			            }
 			         }

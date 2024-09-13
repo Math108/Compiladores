@@ -6,11 +6,18 @@ public class Var {
 	private boolean initialized;
 	private boolean utilized;
 	private double varValue;
+	private String varStringValue;
 	
 	public Var(String id, Types type) {
 		super();
 		this.id = id;
 		this.type = type;
+	}
+	public String getVarStringValue() {
+		return varStringValue;
+	}
+	public void setVarStringValue(String varStringValue) {
+		this.varStringValue = varStringValue;
 	}
 	public double getVarValue() {
 		return varValue;
