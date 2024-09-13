@@ -1,53 +1,37 @@
 programa meuPrograma
-	declare a,b,i,j: number;
-	declare c,k,y,w: real number;
-	declare x: text;
-	inicio
-		escreva("Hello World");
-		escreva("Fim do programa");
-		c := -1.1;
-		c := 1 + 2;
-		k := 200 * 2 + 120 * 3;
-		w := c + k;
-		w := 200 * 3 / 2;
-		leia(a);
-		leia(b);
-		escreva(a);
-		i := 0;
-		j := 0;
-		enquanto(i < 9 || j < 9) 
-		faca 
-			i := i + 1;
-			escreva("estou no while");
-		fimWhile
-		se (a > 5) entao
-			escreva("maior que 5");
-		senao
-		    escreva("menor que 5");
-		fimse
 
-		faca
-			j := j + 1;
-			escreva("estou no doWhile");
-		enquanto(!(j >= 9));
-		fimWhile
+declare a,i,j: number;
+declare b,k,w: real number;
+declare c: text;
 
-		enquanto(i<10 && j < 10)
-		faca
-			j := j + 1;
-			i := i + 1;
-			escreva("teste and");
-		fimWhile
+inicio
+	a:=0;
+	i:=0;
+	j:=0;
+	b:=1.0;
+	c:="ola";
+	k:=600;
+	leia(a);
 
-		escreva("oi agora vamos testar outro");
-		se (b >= 0) entao
-		   escreva("b positivo");
-		senao
-		   escreva("b negativo");
-		fimse
-		
-		
-	fim
+
+	se(a > 0) entao
+		escreva("maior que zero");
+	senao
+		escreva("menor igual a zero");
+	fimse
+
+	enquanto (i < 9) faca
+		i := i + 1;
+		escreva("estou no while");
+	fimWhile
+
+	faca
+		j := j + 1;
+		escreva("estou no doWhile");
+	enquanto(j <= 9);
+	fimWhile
+
+
+
+fim
 fimprog
-
-			

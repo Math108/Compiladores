@@ -221,6 +221,8 @@ cmdAttrib   : ID {      strExpr = "";
                      System.out.println("Log: Valor atribuido a variavel " + varId + ": " + strExpr);
                  }
                  strExpr = "";
+                 leftType = null;
+                 rightType = null;
               }
 			;			
 			

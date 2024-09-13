@@ -1,46 +1,30 @@
 def main():
     a = 0
-    b = 0
-    c = 0.0
+    b = 0.0
+    c = ''
     w = 0.0
-    x = ''
     i = 0
-    y = 0.0
     j = 0
     k = 0.0
-    print("Hello World")
-    print("Fim do programa")
-    c = -1.1
-    c = 1+2
-    k = 200*2+120*3
-    w = c+k
-    w = 200*3/2
-    a = int(input())
-    b = int(input())
-    print(a)
+    a = 0
     i = 0
     j = 0
-    while i<9 or j<9:
+    b = 1.0
+    c = "ola"
+    k = 600
+    a = int(input())
+    if a>0:
+        print("maior que zero")
+    else:
+        print("menor igual a zero")
+    while i<9:
         i = i+1
         print("estou no while")
-    if a>5:
-        print("maior que 5")
-    else:
-        print("menor que 5")
     while True:
         j = j+1
         print("estou no doWhile")
-        if not ((not(j>=9))):
+        if not (j<= 9):
             break
-    while i<10 and j<10:
-        j = j+1
-        i = i+1
-        print("teste and")
-    print("oi agora vamos testar outro")
-    if b>=0:
-        print("b positivo")
-    else:
-        print("b negativo")
 
 if __name__ == '__main__':
     main()
