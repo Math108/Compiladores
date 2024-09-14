@@ -10,6 +10,7 @@ public enum Types {
 	private  Types(int valueNumber) {
 		this.value = valueNumber;
 	}
+	
 	public Integer getValue() {
 		return this.value;
 	}

@@ -10,17 +10,19 @@ public class meuPrograma{
     int j;
     double k;
 a = 0;
+b = 1.5;
+c = "ola";
 i = 0;
 j = 0;
-b = 1.0;
-c = "ola";
-k = 600;
-a = _scTrx.nextInt();
-if (a>0) {System.out.println("maior que zero");
-}else {System.out.println("menor igual a zero");
-}while (i<9) {i = i+1;
+k = 200*(70/5.5);
+w = k+b;
+System.out.println(c);
+c = _scTrx.nextLine();
+if ((!(a==3))) {System.out.println("estou no if");
+}else {System.out.println("nao entrei");
+}while (i<9&&a<0) {i = i+1;
 System.out.println("estou no while");
 }do {j = j+1;
 System.out.println("estou no doWhile");
-}while (j<= 9);   }
+}while (j<9);   }
 }

@@ -6,32 +6,32 @@ declare c: text;
 
 inicio
 	a:=0;
+	b:=1.5;
+	c:="ola";
 	i:=0;
 	j:=0;
-	b:=1.0;
-	c:="ola";
-	k:=600;
-	leia(a);
+	k:=200*(70/5.5);
+	w:=k+b;
 
+	escreva(c);
+	leia(c);
 
-	se(a > 0) entao
-		escreva("maior que zero");
+	se (!(a==3)) entao
+		escreva("estou no if");
 	senao
-		escreva("menor igual a zero");
+		escreva("nao entrei");
 	fimse
 
-	enquanto (i < 9) faca
-		i := i + 1;
+	enquanto (i < 9 && a < 0) faca
+		i:= i +1;
 		escreva("estou no while");
 	fimWhile
 
 	faca
-		j := j + 1;
+		j:= j + 1;
 		escreva("estou no doWhile");
-	enquanto(j <= 9);
+	enquanto(j <9);
 	fimWhile
-
-
 
 fim
 fimprog
